@@ -1,4 +1,16 @@
 package com.coding.backend.usersubmissionproblem.controller;
 
+import com.coding.backend.usersubmissionproblem.service.UserSubmissionProblemService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("submission")
+@RequiredArgsConstructor
 public class UserSubmissionProblemController {
+
+    private final UserSubmissionProblemService userSubmissionProblemService;
+
+
 }

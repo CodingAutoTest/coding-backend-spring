@@ -14,6 +14,7 @@ public class AiFeedback {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ai_feedback_id")
     private Integer id;
 
     @Column(columnDefinition = "TEXT", nullable = false)

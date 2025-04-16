@@ -1,7 +1,7 @@
 package com.coding.backend.subscription.entity;
 
-import com.cat.domain.user.entity.User;
 import com.coding.backend.plan.entity.Plan;
+import com.coding.backend.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +18,7 @@ public class Subscription {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "subscription_id")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)

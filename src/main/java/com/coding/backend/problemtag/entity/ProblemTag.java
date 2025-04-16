@@ -16,6 +16,7 @@ public class ProblemTag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "problem_tag_id")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)

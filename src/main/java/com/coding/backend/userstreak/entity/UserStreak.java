@@ -18,6 +18,7 @@ public class UserStreak {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_streak_id")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)

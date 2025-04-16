@@ -17,6 +17,7 @@ public class Problem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "problem_id")
     private Integer id;
 
     @Column(nullable = false, length = 255)

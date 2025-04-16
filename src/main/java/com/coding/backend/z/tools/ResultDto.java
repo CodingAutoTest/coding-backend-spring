@@ -15,8 +15,10 @@ public class ResultDto<T> {
     private Map<String, T> result;
 
 
-    // Ex) return ResultDTO.of(HttpStatus.OK, "문제 조회 성공");
-    // Ex) return ResultDTO.of(HttpStatus.NOT_FOUND, "Error");
+    // Ex) return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "실행 성공"));
+    // Ex) return ResponseEntity
+    //                    .status(HttpStatus.NOT_FOUND)
+    //                    .body(ResultDto.of(HttpStatus.NOT_FOUND, "Error", result, "result"));
     public static <T> ResultDto<T> of(HttpStatus status, String message) {
         ResultDto<T> dto = new ResultDto<>();
         dto.status = status.value();

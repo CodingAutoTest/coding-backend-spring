@@ -17,6 +17,7 @@ public class Testcase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "testcase_id")
     private Integer id;
 
     @Column(columnDefinition = "TEXT", nullable = false)

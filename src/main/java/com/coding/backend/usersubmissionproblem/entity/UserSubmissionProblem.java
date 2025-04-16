@@ -1,9 +1,9 @@
 package com.coding.backend.usersubmissionproblem.entity;
 
-import com.cat.domain.user.entity.User;
 import com.coding.backend.aifeedback.entity.AiFeedback;
 import com.coding.backend.language.entity.Language;
 import com.coding.backend.problem.entity.Problem;
+import com.coding.backend.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,10 +21,11 @@ public class UserSubmissionProblem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_submission_problem_id")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ai_feedbak_id", nullable = false)
+    @JoinColumn(name = "ai_feedback_id", nullable = false)
     private AiFeedback aiFeedback;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -60,4 +61,13 @@ public class UserSubmissionProblem {
     private LocalDateTime updatedAt;
 
     private String updatedBy;
+
+    @Column(name = "passed_count")
+    private Integer passedCount;
+
+    @Column(name = "total_count")
+    private Integer totalCount;
+
+    @Column(name = "error", columnDefinition = "TEXT")
+    private String error;
 }

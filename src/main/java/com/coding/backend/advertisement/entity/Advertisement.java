@@ -14,5 +14,6 @@ public class Advertisement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "advertisement_id")
     private Integer id;
 }
