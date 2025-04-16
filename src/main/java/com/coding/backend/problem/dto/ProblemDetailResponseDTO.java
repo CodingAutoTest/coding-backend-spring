@@ -4,6 +4,8 @@ import com.coding.backend.problem.entity.Problem;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Builder
 @Getter
@@ -18,19 +20,6 @@ public class ProblemDetailResponseDTO {
     private BigDecimal acceptanceRate;
     private BigDecimal timeLimit;
     private Integer memoryLimit;
-
-    public static ProblemDetailResponseDTO from(Problem problem) {
-        return ProblemDetailResponseDTO.builder()
-                .id(problem.getId())
-                .title(problem.getTitle())
-                .description(problem.getDescription())
-                .inputConstraints(problem.getInputConstraints())
-                .outputConstraints(problem.getOutputConstraints())
-                .difficulty(problem.getDifficulty())
-                .acceptanceRate(problem.getAcceptanceRate())
-                .timeLimit(problem.getTimeLimit())
-                .memoryLimit(problem.getMemoryLimit())
-                .build();
-    }
+    private List<String> tags;
 }
 

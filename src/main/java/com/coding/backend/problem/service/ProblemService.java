@@ -19,11 +19,26 @@ public class ProblemService {
 
     private final ProblemRepository problemRepository;
 
-
     public ProblemDetailResponseDTO getProblemDetail(Integer id) {
-        Problem problem = problemRepository.findById(id)
+        Problem problem = problemRepository.findWithTagsById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("해당 문제를 찾을 수 없습니다."));
-        return ProblemDetailResponseDTO.from(problem);
-    }
 
+        List<String> tagNames = problem.getProblemTags().stream()
+                .map(pt -> pt.getTag().getName())
+                .collect(Collectors.toList());
+
+        return ProblemDetailResponseDTO.builder()
+                .id(problem.getId())
+                .title(problem.getTitle())
+                .description(problem.getDescription())
+                .inputConstraints(problem.getInputConstraints())
+                .outputConstraints(problem.getOutputConstraints())
+                .difficulty(problem.getDifficulty())
+                .acceptanceRate(problem.getAcceptanceRate())
+                .timeLimit(problem.getTimeLimit())
+                .memoryLimit(problem.getMemoryLimit())
+                .tags(tagNames)
+                .build();
+    }
 }
+

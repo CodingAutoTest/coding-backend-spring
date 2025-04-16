@@ -1,10 +1,12 @@
 package com.coding.backend.problem.entity;
 
+import com.coding.backend.problemtag.entity.ProblemTag;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "problem")
@@ -56,4 +58,8 @@ public class Problem {
     private LocalDateTime updatedAt;
 
     private String updatedBy;
+
+    @OneToMany(mappedBy = "problem", fetch = FetchType.LAZY)
+    private List<ProblemTag> problemTags;
+
 }
