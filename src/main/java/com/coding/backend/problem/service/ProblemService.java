@@ -6,11 +6,13 @@ import com.coding.backend.problem.entity.Problem;
 import com.coding.backend.problem.repository.ProblemRepository;
 import com.coding.backend.testcase.dto.TestcaseResponseDTO;
 import com.coding.backend.testcase.repository.TestcaseRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -33,12 +35,17 @@ public class ProblemService {
                 .description(problem.getDescription())
                 .inputConstraints(problem.getInputConstraints())
                 .outputConstraints(problem.getOutputConstraints())
-                .difficulty(problem.getDifficulty())
                 .acceptanceRate(problem.getAcceptanceRate())
                 .timeLimit(problem.getTimeLimit())
                 .memoryLimit(problem.getMemoryLimit())
                 .tags(tagNames)
                 .build();
+    }
+
+    public Integer getDiffulty(Integer id) {
+        Optional<Problem> optionalProblem = Optional.ofNullable(problemRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("문제 객체를 찾을 수 없습니다.")));
+        return optionalProblem.get().getDifficulty();
     }
 }
 

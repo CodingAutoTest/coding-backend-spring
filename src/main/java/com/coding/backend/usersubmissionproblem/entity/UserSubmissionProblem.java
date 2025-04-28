@@ -1,6 +1,7 @@
 package com.coding.backend.usersubmissionproblem.entity;
 
 import com.coding.backend.aifeedback.entity.AiFeedback;
+import com.coding.backend.global.entity.BaseEntity;
 import com.coding.backend.language.entity.Language;
 import com.coding.backend.problem.entity.Problem;
 import com.coding.backend.user.entity.User;
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserSubmissionProblem {
+public class UserSubmissionProblem extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,16 +52,6 @@ public class UserSubmissionProblem {
 
     @Column(nullable = false)
     private Boolean status;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    private String createdBy;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    private String updatedBy;
 
     @Column(name = "passed_count")
     private Integer passedCount;

@@ -16,7 +16,6 @@ public class ProblemDetailResponseDTO {
     private String description;
     private String inputConstraints;
     private String outputConstraints;
-    private Integer difficulty;
     private BigDecimal acceptanceRate;
     private BigDecimal timeLimit;
     private Integer memoryLimit;

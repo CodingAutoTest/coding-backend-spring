@@ -1,5 +1,6 @@
 package com.coding.backend.problem.entity;
 
+import com.coding.backend.global.entity.BaseEntity;
 import com.coding.backend.problemtag.entity.ProblemTag;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Problem {
+public class Problem extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,16 +49,6 @@ public class Problem {
 
     @Column(name = "view_count", nullable = false)
     private Integer viewCount = 0;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    private String createdBy;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    private String updatedBy;
 
     @OneToMany(mappedBy = "problem", fetch = FetchType.LAZY)
     private List<ProblemTag> problemTags;

@@ -1,4 +1,4 @@
-package com.coding.backend.z.tools;
+package com.coding.backend.global.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;

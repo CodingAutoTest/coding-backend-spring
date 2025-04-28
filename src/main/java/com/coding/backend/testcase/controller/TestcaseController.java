@@ -2,7 +2,7 @@ package com.coding.backend.testcase.controller;
 
 import com.coding.backend.testcase.dto.TestcaseResponseDTO;
 import com.coding.backend.testcase.service.TestcaseService;
-import com.coding.backend.z.tools.ResultDto;
+import com.coding.backend.global.dto.ResultDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

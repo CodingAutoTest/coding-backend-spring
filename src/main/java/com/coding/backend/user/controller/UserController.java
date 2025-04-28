@@ -1,7 +1,8 @@
 package com.coding.backend.user.controller;
 
+import com.coding.backend.user.dto.UserProblemProfileResponseDto;
 import com.coding.backend.user.service.UserService;
-import com.coding.backend.z.tools.ResultDto;
+import com.coding.backend.global.dto.ResultDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,9 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/{userId}/name")
-    public ResponseEntity<ResultDto<String>> getUsername(@PathVariable Integer userId) {
-        String username = userService.getUsernameById(userId);
-        return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "유저 이름 조회 성공", username, "username"));
+    @GetMapping("/{userId}/nameAndImage")
+    public ResponseEntity<ResultDto<UserProblemProfileResponseDto>> getUsername(@PathVariable Integer userId) {
+        UserProblemProfileResponseDto dto = userService.getUsernameAndProfileImageById(userId);
+        return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "유저 이름, IMAGE 조회 성공", dto, "result"));
     }
 }

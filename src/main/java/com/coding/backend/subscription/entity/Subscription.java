@@ -1,5 +1,6 @@
 package com.coding.backend.subscription.entity;
 
+import com.coding.backend.global.entity.BaseEntity;
 import com.coding.backend.plan.entity.Plan;
 import com.coding.backend.user.entity.User;
 import jakarta.persistence.*;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Subscription {
+public class Subscription extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,14 +39,5 @@ public class Subscription {
     @Column(name = "auto_renewal", nullable = false)
     private Boolean autoRenewal;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    private String createdBy;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    private String updatedBy;
 }
 

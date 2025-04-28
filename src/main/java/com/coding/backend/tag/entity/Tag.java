@@ -1,5 +1,6 @@
 package com.coding.backend.tag.entity;
 
+import com.coding.backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Tag {
+public class Tag extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,14 +22,4 @@ public class Tag {
 
     @Column(nullable = false, length = 50)
     private String name;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    private String createdBy;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    private String updatedBy;
 }

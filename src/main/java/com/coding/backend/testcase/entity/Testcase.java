@@ -1,5 +1,6 @@
 package com.coding.backend.testcase.entity;
 
+import com.coding.backend.global.entity.BaseEntity;
 import com.coding.backend.problem.entity.Problem;
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Testcase {
+public class Testcase extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,13 +31,4 @@ public class Testcase {
     @JoinColumn(name = "problem_id", nullable = false)
     private Problem problem;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    private String createdBy;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    private String updatedBy;
 }

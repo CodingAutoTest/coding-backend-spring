@@ -1,6 +1,6 @@
-package com.coding.backend.z.tools;
+package com.coding.backend.global.exception;
 
-import com.coding.backend.global.exception.ResourceNotFoundException;
+import com.coding.backend.global.dto.ResultDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
