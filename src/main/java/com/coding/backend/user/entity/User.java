@@ -2,6 +2,8 @@ package com.coding.backend.user.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -26,7 +28,7 @@ public class User {
     @Column(nullable = false, length = 255)
     private String pw;
 
-    @Column(name = "preminum_status", nullable = false)
+    @Column(name = "premium_status", nullable = false)
     private Boolean premiumStatus;
 
     @Column(nullable = false, length = 50)
@@ -56,6 +58,7 @@ public class User {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
 
     private String updatedBy;
 
