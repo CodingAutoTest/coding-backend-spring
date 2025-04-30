@@ -2,7 +2,7 @@ package com.coding.backend.ranking.controller;
 
 import com.coding.backend.ranking.dto.RankingDTO;
 import com.coding.backend.ranking.service.RankingService;
-import com.coding.backend.z.tools.ResultDto;
+import com.coding.backend.global.dto.ResultDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
