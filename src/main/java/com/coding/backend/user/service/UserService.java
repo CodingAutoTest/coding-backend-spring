@@ -1,6 +1,7 @@
 package com.coding.backend.user.service;
 
 import com.coding.backend.global.exception.ResourceNotFoundException;
+import com.coding.backend.global.utils.EntityUtils;
 import com.coding.backend.user.dto.UserProblemProfileResponseDto;
 import com.coding.backend.user.entity.User;
 import com.coding.backend.user.repository.UserRepository;
@@ -15,11 +16,8 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserProblemProfileResponseDto getUsernameAndProfileImageById(Integer userId) {
-        Optional<User> opUser = Optional.ofNullable(userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("해당 유저를 찾을 수 없습니다.")));
-
-        User user = opUser.get();
+    public UserProblemProfileResponseDto getUsernameAndProfileImageById(Integer id) {
+        User user = EntityUtils.getByIdOrThrow(userRepository, id, "유저가 없습니다.");
 
         UserProblemProfileResponseDto dto = new UserProblemProfileResponseDto();
         dto.setName(user.getName());

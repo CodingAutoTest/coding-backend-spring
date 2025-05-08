@@ -41,7 +41,8 @@ public class User extends BaseEntity {
     @Column(name = "solved_count")
     private Integer solvedCount;
 
-    private Long rating;
+    @Column(name = "rating", nullable = false)
+    private Long rating = 1000L;
 
     @Column(name = "profile_image")
     private String profileImage;
