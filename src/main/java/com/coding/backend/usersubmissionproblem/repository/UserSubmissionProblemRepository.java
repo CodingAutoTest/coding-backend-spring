@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface UserSubmissionProblemRepository extends JpaRepository<UserSubmissionProblem, Integer> {
     List<UserSubmissionProblem> findAllByUserIdAndProblemId(Integer userId, Integer problemId);
-
+    boolean existsByUserIdAndProblemId(Integer userId, Integer problemId);
 }
