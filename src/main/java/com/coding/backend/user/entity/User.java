@@ -17,7 +17,8 @@ import java.time.LocalDateTime;
 @Builder
 public class User extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Integer id;
 
@@ -27,7 +28,7 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 255)
     private String pw;
 
-    @Column(name = "preminum_status", nullable = false)
+    @Column(name = "premium_status", nullable = false)
     private Boolean premiumStatus;
 
     @Column(nullable = false, length = 50)
@@ -48,7 +49,8 @@ public class User extends BaseEntity {
     private String backgroundImage;
 
     @Enumerated(EnumType.STRING)
-    private Role role = Role.user;
+    @Column(name = "role", nullable = false)
+    private Role role;
 
     public enum Role {
         user, admin
