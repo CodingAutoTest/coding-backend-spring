@@ -2,6 +2,7 @@ package com.coding.backend.problem.entity;
 
 import com.coding.backend.global.entity.BaseEntity;
 import com.coding.backend.problemtag.entity.ProblemTag;
+import com.coding.backend.usersubmissionproblem.entity.UserSubmissionProblem;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -52,5 +53,9 @@ public class Problem extends BaseEntity {
 
     @OneToMany(mappedBy = "problem", fetch = FetchType.LAZY)
     private List<ProblemTag> problemTags;
+
+    @OneToMany(mappedBy = "problem", fetch = FetchType.LAZY)
+    private List<UserSubmissionProblem> userSubmissionProblems;
+
 
 }
