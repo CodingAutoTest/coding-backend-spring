@@ -23,4 +23,5 @@ public class AiFeedback {
     private Integer accuracy;
     private Integer efficiency;
     private Integer readability;
+    private Integer testCoverage;
 }

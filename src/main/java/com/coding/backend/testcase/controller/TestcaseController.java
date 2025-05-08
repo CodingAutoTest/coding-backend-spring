@@ -15,11 +15,11 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping
+@RequestMapping("/testcases")
 public class TestcaseController {
 
     private final TestcaseService testcaseService;
-    @GetMapping("/testcases/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ResultDto<?>> getTestcases(@PathVariable Integer id) {
         List<TestcaseResponseDTO> result = testcaseService.getTestcasesByProblemId(id);
         return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "테스트케이스 조회 성공", result, "result"));

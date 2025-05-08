@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/judge") // 또는 /judge
+@RequestMapping("/judge")
 @RequiredArgsConstructor
 public class JudgeController {
 
@@ -29,6 +29,7 @@ public class JudgeController {
 
     @PostMapping("/submit")
     public ResponseEntity<ResultDto<SubmitResponseDto>> submitCode(@RequestBody SubmitRequestDto requestDto) {
+        requestDto.setUser_id(1);
         SubmitResponseDto result = judgeService.requestSubmit(requestDto);
 
             return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "채점 성공", result, "result"));

@@ -50,6 +50,12 @@ public class Problem extends BaseEntity {
     @Column(name = "view_count", nullable = false)
     private Integer viewCount = 0;
 
+    @Column(name = "submission_count", nullable = false)
+    private Integer submissionCount = 0;
+
+    @Column(name = "correct_count", nullable = false)
+    private Integer correctCount = 0;
+
     @OneToMany(mappedBy = "problem", fetch = FetchType.LAZY)
     private List<ProblemTag> problemTags;
 

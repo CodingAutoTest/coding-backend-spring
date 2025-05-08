@@ -18,9 +18,9 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/{userId}/nameAndImage")
-    public ResponseEntity<ResultDto<UserProblemProfileResponseDto>> getUsername(@PathVariable Integer userId) {
-        UserProblemProfileResponseDto dto = userService.getUsernameAndProfileImageById(userId);
+    @GetMapping("/nameAndImage")
+    public ResponseEntity<ResultDto<UserProblemProfileResponseDto>> getUsernameAndImage() {
+        UserProblemProfileResponseDto dto = userService.getUsernameAndProfileImageById(1);
         return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "유저 이름, IMAGE 조회 성공", dto, "result"));
     }
 }

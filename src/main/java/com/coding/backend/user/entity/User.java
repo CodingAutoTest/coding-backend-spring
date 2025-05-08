@@ -27,7 +27,7 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 255)
     private String pw;
 
-    @Column(name = "preminum_status", nullable = false)
+    @Column(name = "premium_status", nullable = false)
     private Boolean premiumStatus;
 
     @Column(nullable = false, length = 50)
@@ -39,7 +39,8 @@ public class User extends BaseEntity {
     @Column(name = "solved_count")
     private Integer solvedCount;
 
-    private Long rating;
+    @Column(name = "rating", nullable = false)
+    private Long rating = 1000L;
 
     @Column(name = "profile_image")
     private String profileImage;
