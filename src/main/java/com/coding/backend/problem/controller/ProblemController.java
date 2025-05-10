@@ -38,9 +38,9 @@ public class ProblemController {
     public ResponseEntity<ProblemResponseDto> getProblems(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "20") int size,
-            @RequestParam(name = "status", required = false) Integer status,
-            @RequestParam(name = "tier", required = false) Integer tier,
-            @RequestParam(name = "tagId", required = false) Long tagId,
+            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "tier", required = false) String tier,
+            @RequestParam(name = "tagId", required = false) Integer tagId,
             @RequestParam(name = "search", required = false) String search
     ) {
         // 문제 목록 조회

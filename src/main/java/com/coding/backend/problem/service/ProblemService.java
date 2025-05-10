@@ -7,20 +7,12 @@ import com.coding.backend.problem.dto.ProblemDto;
 import com.coding.backend.problem.entity.Problem;
 import com.coding.backend.problem.mapper.ProblemMapper;
 import com.coding.backend.problem.repository.ProblemRepository;
-import com.coding.backend.testcase.dto.TestcaseResponseDTO;
-import com.coding.backend.testcase.repository.TestcaseRepository;
 import com.coding.backend.usersubmissionproblem.repository.UserSubmissionProblemRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -45,19 +37,18 @@ public class ProblemService {
     }
 
     public Page<ProblemDto> getProblems(
-            Integer tier,
-            Long tagId,
+            String tier,
+            Integer tagId,
             String search,
-            Integer status,
+            String status,
             int page,
             int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
 
-        // 테스트용 userId 하드코딩
+        // 테스트용 userId
         int userId = 1;
 
-        // 문제 필터링 쿼리 실행
         Page<Problem> problems = problemRepository.findFilteredProblems(
                 status, tier, search, tagId, 1, pageable
         );
@@ -67,16 +58,27 @@ public class ProblemService {
 
     private ProblemDto convertToDto(Problem problem, Integer userId) {
         boolean submitted = userSubmissionProblemRepository.existsByUserIdAndProblemId(userId, problem.getId());
+        boolean solvedAny = userSubmissionProblemRepository.existsByUserIdAndProblemIdAndStatus(userId, problem.getId(), true);
+
+        int status;
+        if (!submitted) {
+            status = 0; // 미제출
+        } else if (solvedAny) {
+            status = 2; // 제출 + 성공 있음
+        } else {
+            status = 1; // 제출 + 성공 없음
+        }
 
         return ProblemDto.builder()
                 .id(problem.getId())
                 .title(problem.getTitle())
                 .difficulty(problem.getDifficulty())
                 .acceptanceRate(problem.getAcceptanceRate())
-                .status(submitted ? 1 : 0)  // TODO: 실제 유저 제출 상태를 확인하여 설정
-                .userId(userId)  // TODO: 유저 정보 설정 (로그인된 사용자 ID를 기반으로 설정 가능)
+                .status(status)
+                .userId(userId)
                 .build();
     }
+
 
 }
 

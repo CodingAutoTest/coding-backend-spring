@@ -26,27 +26,54 @@ public interface ProblemRepository extends JpaRepository<Problem, Integer> {
     LEFT JOIN p.problemTags pt
     LEFT JOIN UserSubmissionProblem usp
         ON usp.problem = p AND usp.user.id = :userId
-    WHERE (:tier IS NULL OR p.difficulty = :tier)
-      AND (:tagId IS NULL OR pt.tag.id = :tagId)
-      AND (:search IS NULL OR LOWER(p.title) LIKE LOWER(CONCAT('%', :search, '%')))
-      AND (
-            :status IS NULL
-            OR (:status = -1 AND usp IS NULL)
-            OR (:status = 0 AND usp IS NOT NULL AND usp.status = false)
-            OR (:status = 1 AND usp IS NOT NULL AND usp.status = true)
-          )
-    """)
+    WHERE (
+        :tier IS NULL OR
+        (:tier = 'bronze' AND p.difficulty BETWEEN 1 AND 5) OR
+        (:tier = 'silver' AND p.difficulty BETWEEN 6 AND 10) OR
+        (:tier = 'gold' AND p.difficulty BETWEEN 11 AND 15) OR
+        (:tier = 'platinum' AND p.difficulty BETWEEN 16 AND 20) OR
+        (:tier = 'diamond' AND p.difficulty BETWEEN 21 AND 25) OR
+        (:tier = 'master' AND p.difficulty BETWEEN 26 AND 30)
+    )
+    AND (:tagId IS NULL OR pt.tag.id = :tagId)
+    AND (:search IS NULL OR LOWER(p.title) LIKE LOWER(CONCAT('%', :search, '%')))
+    AND (
+        :status IS NULL
+        OR (
+            :status = 'unsolved'
+            AND NOT EXISTS (
+                SELECT 1 FROM UserSubmissionProblem u
+                WHERE u.problem = p AND u.user.id = :userId
+            )
+        )
+        OR (
+            :status = 'solving'
+            AND EXISTS (
+                SELECT 1 FROM UserSubmissionProblem u
+                WHERE u.problem = p AND u.user.id = :userId
+            )
+            AND NOT EXISTS (
+                SELECT 1 FROM UserSubmissionProblem u
+                WHERE u.problem = p AND u.user.id = :userId AND u.status = true
+            )
+        )
+        OR (
+            :status = 'solved'
+            AND EXISTS (
+                SELECT 1 FROM UserSubmissionProblem u
+                WHERE u.problem = p AND u.user.id = :userId AND u.status = true
+            )
+        )
+    )
+""")
     Page<Problem> findFilteredProblems(
-            @Param("status") Integer status,
-            @Param("tier") Integer tier,
+            @Param("status") String status,
+            @Param("tier") String tier,
             @Param("search") String search,
-            @Param("tagId") Long tagId,
+            @Param("tagId") Integer tagId,
             @Param("userId") Integer userId,
             Pageable pageable
     );
-
-
-
 
 
 }
