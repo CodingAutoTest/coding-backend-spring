@@ -57,7 +57,9 @@ public class ProblemService {
     }
 
     private ProblemDto convertToDto(Problem problem, Integer userId) {
+        // 제출 확인
         boolean submitted = userSubmissionProblemRepository.existsByUserIdAndProblemId(userId, problem.getId());
+        // 제출 후 성공 여부 확인
         boolean solvedAny = userSubmissionProblemRepository.existsByUserIdAndProblemIdAndStatus(userId, problem.getId(), true);
 
         int status;
@@ -79,6 +81,12 @@ public class ProblemService {
                 .build();
     }
 
+    public void increaseViewCount(Integer id) {
+        Problem problem = EntityUtils.getByIdOrThrow(
+                problemRepository, id, "문제 객체를 찾을 수 없습니다.");
 
+        problem.setViewCount(problem.getViewCount() + 1);
+        problemRepository.save(problem);
+   }
 }
 

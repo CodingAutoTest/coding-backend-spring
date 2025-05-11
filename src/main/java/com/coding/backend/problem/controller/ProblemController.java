@@ -43,10 +43,8 @@ public class ProblemController {
             @RequestParam(name = "tagId", required = false) Integer tagId,
             @RequestParam(name = "search", required = false) String search
     ) {
-        // 문제 목록 조회
         Page<ProblemDto> result = problemService.getProblems(tier, tagId, search, status, page, size);
 
-        // ProblemResponseDto 생성
         ProblemResponseDto response = ProblemResponseDto.builder()
                 .problems(result.getContent())
                 .totalPages(result.getTotalPages())
@@ -56,5 +54,10 @@ public class ProblemController {
         return ResponseEntity.ok(response);
     }
 
-
+    @PostMapping("/{id}/view")
+    public ResponseEntity<ResultDto<Map<String, String>>> increaseViewCount(@PathVariable Integer id) {
+        problemService.increaseViewCount(id);
+        Map<String, String> result = new HashMap<>();
+        return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "문제 조회수 증가 성공", result, "result"));
+    }
 }
