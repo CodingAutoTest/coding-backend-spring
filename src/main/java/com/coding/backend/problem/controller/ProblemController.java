@@ -35,7 +35,7 @@ public class ProblemController {
     }
 
     @GetMapping
-    public ResponseEntity<ProblemResponseDto> getProblems(
+    public ResponseEntity<ResultDto<ProblemResponseDto>> getProblemList(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "20") int size,
             @RequestParam(name = "status", required = false) String status,
@@ -51,7 +51,7 @@ public class ProblemController {
                 .totalElements(result.getTotalElements())
                 .build();
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "문제 목록 조회 성공", response, "problems"));
     }
 
     @PostMapping("/{id}/view")
