@@ -13,12 +13,12 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/rankings")
 @RequiredArgsConstructor
 
 public class RankingController {
     private final RankingService rankingService;
-    @GetMapping("/ranking")
+    @GetMapping
     public ResponseEntity<ResultDto<?>> getRanking(
             @RequestParam(defaultValue = "rating") String sort,
             @RequestParam(defaultValue = "desc") String order,
@@ -30,7 +30,7 @@ public class RankingController {
         return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "랭킹 조회 성공", result, "result"));
     }
 
-@GetMapping("/me/ranking")
+@GetMapping("/me")
 public ResponseEntity<ResultDto<?>> getMyRanking(@RequestParam Integer userid) {
     RankingDTO myRanking = rankingService.getMyRanking(userid);
     return ResponseEntity.ok(ResultDto.of(

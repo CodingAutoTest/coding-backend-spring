@@ -17,7 +17,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/problems")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 public class ProblemController {
 
     private final ProblemService problemService;

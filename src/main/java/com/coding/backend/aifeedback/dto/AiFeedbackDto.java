@@ -1,12 +1,15 @@
 package com.coding.backend.aifeedback.dto;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 
-@Data
+@Getter
+@Builder
 public class AiFeedbackDto {
     private int accuracy;
     private int efficiency;
     private int readability;
     private int test_coverage;
     private String feedback;
+    private int totalScore;
 }

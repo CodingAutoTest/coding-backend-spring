@@ -1,17 +1,17 @@
 package com.coding.backend.usersubmissionproblem.dto;
 
+import com.coding.backend.aifeedback.dto.AiFeedbackDto;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Getter
-@Setter
+@Builder
 public class UserSubmissionProblemDto {
     private String error;
     private int passedCount;
     private int totalCount;
-    private SubmissionScore scores;
-    private String feedback;
-    private int totalScore;
+    private AiFeedbackDto aiFeedbackDto;
 }
 
