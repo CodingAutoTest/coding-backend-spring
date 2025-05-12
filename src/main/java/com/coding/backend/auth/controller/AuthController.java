@@ -3,42 +3,45 @@ package com.coding.backend.auth.controller;
 import com.coding.backend.auth.dto.UserLoginRequestDto;
 import com.coding.backend.auth.dto.UserSignupRequestDto;
 import com.coding.backend.auth.service.AuthService;
+import com.coding.backend.global.jwt.JwtTokenProvider;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
-
-    public AuthController(AuthService authService){
-        this.authService = authService;
-    }
+    private final JwtTokenProvider jwtTokenProvider;
 
     // 회원가입
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody UserSignupRequestDto dto) {
         boolean success = authService.signup(dto);
-        if (success) {
-            return ResponseEntity.ok("회원가입 축하합니다.");
-        } else {
-            return ResponseEntity.badRequest().body("중복 이메일입니다.");
-        }
+        return success ?
+                ResponseEntity.ok().body("") :
+                ResponseEntity.badRequest().body("");
     }
+
+
 
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody UserLoginRequestDto dto) {
-        int result = authService.login(dto);
+    public ResponseEntity<String> login(@RequestBody UserLoginRequestDto dto) {
+        Integer userId = authService.login(dto);
 
-        if (result == -1) {
-            return ResponseEntity.badRequest().body("존재하지 않는 이메일입니다.");
-        } else if (result == -2) {
-            return ResponseEntity.badRequest().body("비밀번호가 일치하지 않습니다.");
-        } else {
-            return ResponseEntity.ok(result); // 유저 ID 반환
+        if (userId == 0) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+
+        String token = jwtTokenProvider.createToken(userId);
+        return ResponseEntity.ok()
+                .header("Authorization", "Bearer " + token)
+                .body("");
     }
+
 }

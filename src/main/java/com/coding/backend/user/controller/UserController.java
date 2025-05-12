@@ -7,6 +7,7 @@ import com.coding.backend.global.dto.ResultDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,31 +25,31 @@ public class UserController {
 
     @GetMapping("/nameAndImage")
     public ResponseEntity<ResultDto<UserProblemProfileResponseDto>> getUsernameAndImage() {
-        UserProblemProfileResponseDto dto = userService.getUsernameAndProfileImageById(1);
-        return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "유저 이름, IMAGE 조회 성공", dto, "result"));
+        UserProblemProfileResponseDto result = userService.getUsernameAndProfileImageById(1);
+        return ResponseEntity.ok(ResultDto.of("result", result));
     }
 
-    @GetMapping("/{userId}/profile")
-    public ResponseEntity<ResultDto<UserMyPageDto>> getUserMyPageInfo(@PathVariable Integer userId) {
-        UserMyPageDto dto = userService.getUserMyPageInfo(userId);
-        return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "마이페이지 조회 성공", dto, "user"));
+    @GetMapping("/profile")
+    public ResponseEntity<ResultDto<UserMyPageDto>> getUserMyPageInfo(@AuthenticationPrincipal Integer userId) {
+        UserMyPageDto result = userService.getUserMyPageInfo(userId);
+        return ResponseEntity.ok(ResultDto.of("result", result));
     }
 
-    @GetMapping("/{userId}/stats/level")
-    public ResponseEntity<ResultDto<Map<Integer, Integer>>> getTierStats(@PathVariable Integer userId) {
-        Map<Integer, Integer> data = userService.getTierStats(userId);
-        return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "티어별 통계 조회 성공", data, "levelStats"));
+    @GetMapping("/stats/level")
+    public ResponseEntity<ResultDto<Map<Integer, Integer>>> getTierStats(@AuthenticationPrincipal Integer userId) {
+        Map<Integer, Integer> result = userService.getTierStats(userId);
+        return ResponseEntity.ok(ResultDto.of("result", result));
     }
 
-    @GetMapping("/{userId}/stats/tag")
-    public ResponseEntity<ResultDto<Map<String, Integer>>> getTagStats(@PathVariable Integer userId) {
-        Map<String, Integer> data = userService.getTagStats(userId);
-        return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "태그별 통계 조회 성공", data, "tagStats"));
+    @GetMapping("/stats/tag")
+    public ResponseEntity<ResultDto<Map<String, Integer>>> getTagStats(@AuthenticationPrincipal Integer userId) {
+        Map<String, Integer> result = userService.getTagStats(userId);
+        return ResponseEntity.ok(ResultDto.of("result", result));
     }
 
-    @GetMapping("/{userId}/stats/streak")
-    public ResponseEntity<ResultDto<Map<LocalDate, Integer>>> getStreakStats(@PathVariable Integer userId) {
-        Map<LocalDate, Integer> data = userService.getStreakStats(userId);
-        return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "스트릭 통계 조회 성공", data, "streakStats"));
+    @GetMapping("/stats/streak")
+    public ResponseEntity<ResultDto<Map<LocalDate, Integer>>> getStreakStats(@AuthenticationPrincipal Integer userId) {
+        Map<LocalDate, Integer> result = userService.getStreakStats(userId);
+        return ResponseEntity.ok(ResultDto.of("result", result));
     }
 }

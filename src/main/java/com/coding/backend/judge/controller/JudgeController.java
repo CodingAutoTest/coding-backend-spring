@@ -24,15 +24,14 @@ public class JudgeController {
     @PostMapping("/execute")
     public ResponseEntity<ResultDto<ExecuteResponseDto>> executeCode(@RequestBody ExecuteRequestDto requestDto) {
         ExecuteResponseDto result = judgeService.requestExecution(requestDto);
-        return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "실행 성공", result, "result"));
+        return ResponseEntity.ok(ResultDto.of("result", result));
     }
 
     @PostMapping("/submit")
     public ResponseEntity<ResultDto<SubmitResponseDto>> submitCode(@RequestBody SubmitRequestDto requestDto) {
         requestDto.setUser_id(1);
         SubmitResponseDto result = judgeService.requestSubmit(requestDto);
-
-            return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "채점 성공", result, "result"));
+            return ResponseEntity.ok(ResultDto.of("result", result));
     }
 
 }

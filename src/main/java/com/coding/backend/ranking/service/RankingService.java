@@ -31,7 +31,6 @@ public class RankingService {
         int myRank = rankingRepository.countByRatingGreaterThan(myRating) + 1;
 
         return RankingDTO.builder()
-                .userId(user.getId())  // ✅ 여기에 포함
                 .rank(myRank)
                 .name(user.getName())
                 .profileImage(user.getProfileImage())
@@ -58,7 +57,6 @@ public class RankingService {
 
         List<RankingDTO> rankings = userPage.getContent().stream()
                 .map(user -> RankingDTO.builder()
-                        .userId(user.getId())  // ✅ 여기에 포함
                         .rank(ratingRankMap.get(user.getId()))  // ✅ 항상 rating 기준 rank
                         .name(user.getName())
                         .profileImage(user.getProfileImage())

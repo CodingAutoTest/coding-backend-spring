@@ -6,6 +6,7 @@ import com.coding.backend.global.dto.ResultDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -27,18 +28,13 @@ public class RankingController {
             @RequestParam(required = false) String name
     ) {
         Map<String, Object> result = rankingService.getRankingWithPageable(sort, order, page, size, name);
-        return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "랭킹 조회 성공", result, "result"));
+        return ResponseEntity.ok(ResultDto.of("result", result));
     }
 
 @GetMapping("/me")
-public ResponseEntity<ResultDto<?>> getMyRanking(@RequestParam Integer userid) {
-    RankingDTO myRanking = rankingService.getMyRanking(userid);
-    return ResponseEntity.ok(ResultDto.of(
-            HttpStatus.OK,
-            "내 랭킹 조회 성공",
-            myRanking,
-            "myRanking"
-    ));
+public ResponseEntity<ResultDto<?>> getMyRanking(@AuthenticationPrincipal Integer userId) {
+    RankingDTO result = rankingService.getMyRanking(userId);
+    return ResponseEntity.ok(ResultDto.of("result", result));
 }
 
 

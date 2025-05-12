@@ -31,7 +31,8 @@ public class User extends BaseEntity {
     private String pw;
 
     @Column(name = "premium_status", nullable = false)
-    private Boolean premiumStatus;
+    @Builder.Default
+    private Boolean premiumStatus = false;
 
     @Column(nullable = false, length = 50)
     private String name;
@@ -43,6 +44,7 @@ public class User extends BaseEntity {
     private Integer solvedCount;
 
     @Column(name = "rating", nullable = false)
+    @Builder.Default
     private Long rating = 1000L;
 
     @Column(name = "profile_image")
@@ -53,7 +55,8 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private Role role;
+    @Builder.Default
+    private Role role = Role.user;
 
     public enum Role {
         user, admin

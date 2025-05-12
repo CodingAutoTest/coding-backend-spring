@@ -28,9 +28,9 @@ public abstract class BaseEntity {
 
     @CreatedBy
     @Column(updatable = true)
-    private Long createdBy;
+    private Integer createdBy;
 
     @LastModifiedBy
     @Column(updatable = true)
-    private Long updatedBy;
+    private Integer updatedBy;
 }

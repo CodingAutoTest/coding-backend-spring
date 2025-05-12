@@ -1,5 +1,6 @@
 package com.coding.backend.problem.controller;
 
+import com.coding.backend.global.jwt.JwtTokenProvider;
 import com.coding.backend.problem.dto.ProblemDetailResponseDTO;
 import com.coding.backend.problem.dto.ProblemDto;
 import com.coding.backend.problem.dto.ProblemResponseDto;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -21,16 +23,18 @@ public class ProblemController {
 
     private final ProblemService problemService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ResultDto<ProblemDetailResponseDTO>> getProblem(@PathVariable Integer id) {
-        ProblemDetailResponseDTO result = problemService.getProblemDetail(id);
-        return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "문제 조회 성공", result, "result"));
+    @GetMapping("/{problemId}")
+    public ResponseEntity<ResultDto<ProblemDetailResponseDTO>> getProblem(@PathVariable Integer problemId) {
+        ProblemDetailResponseDTO result = problemService.getProblemDetail(problemId);
+        return ResponseEntity.ok(ResultDto.of("result", result));
     }
 
-    @GetMapping("/{id}/difficulty")
-    public ResponseEntity<ResultDto<Integer>> getDifficulty(@PathVariable Integer id) {
-        Integer result = problemService.getDiffulty(id);
-        return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "문제 난이도 조회 성공", result, "difficulty"));
+    @GetMapping("/{problemId}/difficulty")
+    public ResponseEntity<ResultDto<Map<String, Integer>>> getDifficulty(@PathVariable Integer problemId) {
+        Integer diffulty = problemService.getDiffulty(problemId);
+        Map<String, Integer> result = new HashMap<>();
+        result.put("difficulty", diffulty);
+        return ResponseEntity.ok(ResultDto.of("result", result));
     }
 
     @GetMapping
@@ -40,23 +44,18 @@ public class ProblemController {
             @RequestParam(name = "status", required = false) String status,
             @RequestParam(name = "tier", required = false) String tier,
             @RequestParam(name = "tagId", required = false) Integer tagId,
-            @RequestParam(name = "search", required = false) String search
+            @RequestParam(name = "search", required = false) String search,
+            @AuthenticationPrincipal Integer userId
     ) {
-        Page<ProblemDto> result = problemService.getProblems(tier, tagId, search, status, page, size);
-
-        ProblemResponseDto response = ProblemResponseDto.builder()
-                .problems(result.getContent())
-                .totalPages(result.getTotalPages())
-                .totalElements(result.getTotalElements())
-                .build();
-
-        return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "문제 목록 조회 성공", response, "problems"));
+        ProblemResponseDto result = problemService.getProblems(tier, tagId, search, status, page, size, userId);
+        return ResponseEntity.ok(ResultDto.of("result", result));
     }
 
-    @PostMapping("/{id}/view")
-    public ResponseEntity<ResultDto<Map<String, String>>> increaseViewCount(@PathVariable Integer id) {
-        problemService.increaseViewCount(id);
+    @PostMapping("/{problemId}/view")
+    public ResponseEntity<ResultDto<Map<String, String>>> increaseViewCount(
+            @PathVariable Integer problemId) {
+        problemService.increaseViewCount(problemId);
         Map<String, String> result = new HashMap<>();
-        return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "문제 조회수 증가 성공", result, "result"));
+        return ResponseEntity.ok(ResultDto.of("result", result));
     }
 }

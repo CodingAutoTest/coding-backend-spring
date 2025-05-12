@@ -2,7 +2,9 @@ package com.coding.backend.auth.service;
 
 import java.util.Optional;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.coding.backend.auth.dto.UserLoginRequestDto;
@@ -11,35 +13,35 @@ import com.coding.backend.user.repository.UserRepository;
 import com.coding.backend.user.entity.User;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // 로그인
-    public int login(UserLoginRequestDto dto) {
+    public Integer login(UserLoginRequestDto dto) {
         Optional<User> optionalUser = userRepository.findByEmail(dto.getEmail());
-        if (optionalUser.isEmpty()) {
-            return -1; // 이메일 없음
-        }
 
-        User user = optionalUser.get();
-        if (!user.getPw().equals(dto.getPw())) {
-            return -2; // 비밀번호 불일치
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (passwordEncoder.matches(dto.getPw(), user.getPw())) {
+                return user.getId();
+            }
         }
-
-        return Math.toIntExact(user.getId()); // 성공 시 ID 반환
+        return 0; // 로그인 실패
     }
+
 
     // 회원가입
     public boolean signup(UserSignupRequestDto dto) {
         if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
-            return false; // 중복 이메일
+            return false;
         }
 
         User user = User.builder()
                 .email(dto.getEmail())
-                .pw(dto.getPw())
+                .pw(passwordEncoder.encode(dto.getPw()))  // 해시 처리
                 .name(dto.getName())
                 .build();
 

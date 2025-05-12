@@ -19,9 +19,9 @@ import java.util.List;
 public class TestcaseController {
 
     private final TestcaseService testcaseService;
-    @GetMapping("/{id}")
-    public ResponseEntity<ResultDto<?>> getTestcases(@PathVariable Integer id) {
-        List<TestcaseResponseDTO> result = testcaseService.getTestcasesByProblemId(id);
-        return ResponseEntity.ok(ResultDto.of(HttpStatus.OK, "테스트케이스 조회 성공", result, "result"));
+    @GetMapping("/{testcaseId}")
+    public ResponseEntity<ResultDto<?>> getTestcases(@PathVariable Integer testcaseId) {
+        List<TestcaseResponseDTO> result = testcaseService.getTestcasesByProblemId(testcaseId);
+        return ResponseEntity.ok(ResultDto.of("result", result));
     }
 }

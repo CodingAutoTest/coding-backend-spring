@@ -4,6 +4,7 @@ import com.coding.backend.global.exception.ResourceNotFoundException;
 import com.coding.backend.global.utils.EntityUtils;
 import com.coding.backend.problem.dto.ProblemDetailResponseDTO;
 import com.coding.backend.problem.dto.ProblemDto;
+import com.coding.backend.problem.dto.ProblemResponseDto;
 import com.coding.backend.problem.entity.Problem;
 import com.coding.backend.problem.mapper.ProblemMapper;
 import com.coding.backend.problem.repository.ProblemRepository;
@@ -36,24 +37,28 @@ public class ProblemService {
         return problem.getDifficulty();
     }
 
-    public Page<ProblemDto> getProblems(
+    public ProblemResponseDto getProblems(
             String tier,
             Integer tagId,
             String search,
             String status,
             int page,
-            int size
+            int size,
+            Integer userId
     ) {
         Pageable pageable = PageRequest.of(page, size);
 
-        // 테스트용 userId
-        int userId = 1;
-
         Page<Problem> problems = problemRepository.findFilteredProblems(
-                status, tier, search, tagId, 1, pageable
+                status, tier, search, tagId, userId, pageable
         );
 
-        return problems.map(problem -> convertToDto(problem, userId));
+        Page<ProblemDto> problemDtos = problems.map(problem -> convertToDto(problem, userId));
+
+        return ProblemResponseDto.builder()
+                .problems(problemDtos.getContent())
+                .totalPages(problemDtos.getTotalPages())
+                .totalElements(problemDtos.getTotalElements())
+                .build();
     }
 
     private ProblemDto convertToDto(Problem problem, Integer userId) {
@@ -77,8 +82,8 @@ public class ProblemService {
                 .difficulty(problem.getDifficulty())
                 .acceptanceRate(problem.getAcceptanceRate())
                 .status(status)
-                .userId(userId)
                 .build();
+
     }
 
     public void increaseViewCount(Integer id) {
