@@ -24,8 +24,6 @@ public interface ProblemRepository extends JpaRepository<Problem, Integer> {
     @Query("""
     SELECT DISTINCT p FROM Problem p
     LEFT JOIN p.problemTags pt
-    LEFT JOIN UserSubmissionProblem usp
-        ON usp.problem = p AND usp.user.id = :userId
     WHERE (
         :tier IS NULL OR
         (:tier = 'bronze' AND p.difficulty BETWEEN 1 AND 5) OR
@@ -38,8 +36,8 @@ public interface ProblemRepository extends JpaRepository<Problem, Integer> {
     AND (:tagId IS NULL OR pt.tag.id = :tagId)
     AND (:search IS NULL OR LOWER(p.title) LIKE LOWER(CONCAT('%', :search, '%')))
     AND (
-        :status IS NULL
-        OR (
+        :status IS NULL OR :userId IS NULL OR
+        (
             :status = 'unsolved'
             AND NOT EXISTS (
                 SELECT 1 FROM UserSubmissionProblem u
@@ -74,6 +72,7 @@ public interface ProblemRepository extends JpaRepository<Problem, Integer> {
             @Param("userId") Integer userId,
             Pageable pageable
     );
+
 
 
 }
