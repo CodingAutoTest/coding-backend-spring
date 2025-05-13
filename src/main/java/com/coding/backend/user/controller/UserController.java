@@ -66,7 +66,7 @@ public class UserController {
 
     /* ─── 이미지 업로드 ─── */
 
-    @PostMapping("/{userId}/upload-image")
+    @PostMapping("/upload-image")
     public ResponseEntity<ResultDto<UploadImageResponseDto>> uploadImages(
             @PathVariable Integer userId,
             @RequestPart(value = "profileImage",    required = false) MultipartFile profileImg,
@@ -78,7 +78,7 @@ public class UserController {
 
     /* ─── 프로필 수정 ─── */
 
-    @PostMapping("/{userId}/modify")
+    @PostMapping("/modify")
     public ResponseEntity<ResultDto<Void>> modifyProfile(
             @PathVariable Integer userId,
             @RequestBody UserProfileModifyRequestDto dto) {
@@ -89,7 +89,7 @@ public class UserController {
 
     /* ─── 비밀번호 변경 ─── */
 
-    @PostMapping("/{userId}/change-password")
+    @PostMapping("/change-password")
     public ResponseEntity<ResultDto<Void>> changePassword(
             @PathVariable Integer userId,
             @RequestBody UserPasswordChangeRequestDto dto) {
@@ -100,7 +100,7 @@ public class UserController {
 
     /* ─── 프리미엄 저장 ─── */
 
-    @PostMapping("/{userId}/save")
+    @PostMapping("/save")
     public ResponseEntity<ResultDto<Void>> savePremium(
             @PathVariable Integer userId,
             @RequestBody PremiumRequestDto dto) {
@@ -111,7 +111,7 @@ public class UserController {
 
     /* ─── 계정 삭제 ─── */
 
-    @PostMapping("/{userId}/remove")
+    @PostMapping("/remove")
     public ResponseEntity<ResultDto<Void>> removeUser(@PathVariable Integer userId) {
         userService.removeUser(userId);
         return ResponseEntity.ok(ResultDto.of("result", null));
