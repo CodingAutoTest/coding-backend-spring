@@ -46,7 +46,7 @@ public interface UserSubmissionProblemMapper {
                 .accuracy(ai.getAccuracy())
                 .efficiency(ai.getEfficiency())
                 .readability(ai.getReadability())
-                .test_coverage(ai.getTestCoverage())
+                .testCoverage(ai.getTestCoverage())
                 .feedback(ai.getFeedback())
                 .totalScore(
                         ai.getAccuracy() + ai.getEfficiency() + ai.getReadability() + ai.getTestCoverage()
