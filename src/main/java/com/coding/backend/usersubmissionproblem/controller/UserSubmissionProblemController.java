@@ -26,6 +26,7 @@ public class UserSubmissionProblemController {
     public ResponseEntity<ResultDto<UserSubmissionProblemDto>> submissionDetails(
             @PathVariable Integer submissionId) {
         UserSubmissionProblemDto result = userSubmissionProblemService.findSubmissionDetails(submissionId);
+        System.out.println(result.getAiFeedbackDto().getTotalScore());
         return ResponseEntity.ok(ResultDto.of("result", result));
     }
 

@@ -46,6 +46,8 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
+        user.setCreatedBy(user.getId());
+        userRepository.save(user);
         return true;
     }
 }

@@ -9,7 +9,7 @@ public class AiFeedbackDto {
     private int accuracy;
     private int efficiency;
     private int readability;
-    private int test_coverage;
+    private int testCoverage;
     private String feedback;
     private int totalScore;
 }

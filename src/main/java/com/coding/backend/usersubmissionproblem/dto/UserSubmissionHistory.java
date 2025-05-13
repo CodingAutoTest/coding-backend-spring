@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class UserSubmissionHistory {
-    private int id;
+    private int submissionId;
     private String createdAt;
     private String language;
     private BigDecimal executionTime;

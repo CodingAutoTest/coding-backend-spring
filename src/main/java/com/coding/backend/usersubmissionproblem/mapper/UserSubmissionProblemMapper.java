@@ -17,6 +17,7 @@ import java.util.List;
 public interface UserSubmissionProblemMapper {
     @Mapping(source = "language", target = "language", qualifiedByName = "mapLanguageName")
     @Mapping(source = "createdAt", target = "createdAt", qualifiedByName = "formatDate")
+    @Mapping(source = "id", target = "submissionId")
     UserSubmissionHistory toHistoryDto(UserSubmissionProblem usp);
 
 
@@ -45,7 +46,7 @@ public interface UserSubmissionProblemMapper {
                 .accuracy(ai.getAccuracy())
                 .efficiency(ai.getEfficiency())
                 .readability(ai.getReadability())
-                .test_coverage(ai.getTestCoverage())
+                .testCoverage(ai.getTestCoverage())
                 .feedback(ai.getFeedback())
                 .totalScore(
                         ai.getAccuracy() + ai.getEfficiency() + ai.getReadability() + ai.getTestCoverage()

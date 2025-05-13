@@ -37,15 +37,19 @@ public class JwtTokenProvider {
 
     // 토큰에서 userId 꺼내기
     public Integer getUserIdFromToken(String token) {
-        return Integer.parseInt(
-                Jwts.parserBuilder()
-                        .setSigningKey(signingKey)
-                        .build()
-                        .parseClaimsJws(token)
-                        .getBody()
-                        .getSubject()
-        );
-    }
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(signingKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        Object userId = claims.get("userId");
+
+        if (userId instanceof Integer) {
+            return (Integer) userId;
+        }
+            return null;
+        }
 
     // 토큰 유효성 검증
     public boolean validateToken(String token) {
