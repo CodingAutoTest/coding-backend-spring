@@ -14,4 +14,12 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // /static/** 요청을 프로젝트 루트의 uploads/ 폴더로 매핑
+        registry
+                .addResourceHandler("/static/**")
+                .addResourceLocations("file:uploads/");
+    }
 }
