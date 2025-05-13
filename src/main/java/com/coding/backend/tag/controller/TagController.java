@@ -1,5 +1,6 @@
 package com.coding.backend.tag.controller;
 
+import com.coding.backend.global.dto.ResultDto;
 import com.coding.backend.tag.dto.TagDto;
 import com.coding.backend.tag.service.TagService;
 import org.springframework.http.HttpStatus;
@@ -21,9 +22,9 @@ public class TagController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TagDto>> getTags() {
-            List<TagDto> tags = tagService.getAllTags();
-            return ResponseEntity.ok(tags);
+    public ResponseEntity<ResultDto<List<TagDto>>> getTags() {
+            List<TagDto> result = tagService.getAllTags();
+            return ResponseEntity.ok(ResultDto.of("result", result));
     }
 }
 
