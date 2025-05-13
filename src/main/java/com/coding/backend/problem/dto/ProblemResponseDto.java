@@ -2,7 +2,7 @@ package com.coding.backend.problem.dto;
 
 import lombok.*;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -10,8 +10,9 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class ProblemResponseDto {
-    private List<ProblemDto> problems;
-    private int totalPages;
-    private long totalElements;
+    private Integer id;
+    private String title;
+    private Integer difficulty;
+    private BigDecimal acceptanceRate;
+    private Integer status; // 유저 제출 여부에 따라 설정
 }
-

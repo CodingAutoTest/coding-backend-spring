@@ -3,8 +3,8 @@ package com.coding.backend.problem.service;
 import com.coding.backend.global.exception.ResourceNotFoundException;
 import com.coding.backend.global.utils.EntityUtils;
 import com.coding.backend.problem.dto.ProblemDetailResponseDTO;
-import com.coding.backend.problem.dto.ProblemDto;
 import com.coding.backend.problem.dto.ProblemResponseDto;
+import com.coding.backend.problem.dto.ProblemPageResponseDto;
 import com.coding.backend.problem.entity.Problem;
 import com.coding.backend.problem.mapper.ProblemMapper;
 import com.coding.backend.problem.repository.ProblemRepository;
@@ -37,7 +37,7 @@ public class ProblemService {
         return problem.getDifficulty();
     }
 
-    public ProblemResponseDto getProblems(
+    public ProblemPageResponseDto getProblems(
             String tier,
             Integer tagId,
             String search,
@@ -52,16 +52,16 @@ public class ProblemService {
                 status, tier, search, tagId, userId, pageable
         );
 
-        Page<ProblemDto> problemDtos = problems.map(problem -> convertToDto(problem, userId));
+        Page<ProblemResponseDto> problemResponseDto = problems.map(problem -> convertToDto(problem, userId));
 
-        return ProblemResponseDto.builder()
-                .problems(problemDtos.getContent())
-                .totalPages(problemDtos.getTotalPages())
-                .totalElements(problemDtos.getTotalElements())
+        return ProblemPageResponseDto.builder()
+                .problems(problemResponseDto.getContent())
+                .totalPages(problemResponseDto.getTotalPages())
+                .totalElements(problemResponseDto.getTotalElements())
                 .build();
     }
 
-    private ProblemDto convertToDto(Problem problem, Integer userId) {
+    private ProblemResponseDto convertToDto(Problem problem, Integer userId) {
         // 제출 확인
         boolean submitted = userSubmissionProblemRepository.existsByUserIdAndProblemId(userId, problem.getId());
         // 제출 후 성공 여부 확인
@@ -76,7 +76,7 @@ public class ProblemService {
             status = 1; // 제출 + 성공 없음
         }
 
-        return ProblemDto.builder()
+        return ProblemResponseDto.builder()
                 .id(problem.getId())
                 .title(problem.getTitle())
                 .difficulty(problem.getDifficulty())
@@ -86,12 +86,14 @@ public class ProblemService {
 
     }
 
-    public void increaseViewCount(Integer id) {
+    public int increaseViewCount(Integer id) {
         Problem problem = EntityUtils.getByIdOrThrow(
                 problemRepository, id, "문제 객체를 찾을 수 없습니다.");
 
         problem.setViewCount(problem.getViewCount() + 1);
         problemRepository.save(problem);
+
+        return problem.getViewCount();
    }
 }
 
