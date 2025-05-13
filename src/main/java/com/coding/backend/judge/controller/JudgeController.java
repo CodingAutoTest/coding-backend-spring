@@ -9,6 +9,7 @@ import com.coding.backend.global.dto.ResultDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,8 +29,9 @@ public class JudgeController {
     }
 
     @PostMapping("/submit")
-    public ResponseEntity<ResultDto<SubmitResponseDto>> submitCode(@RequestBody SubmitRequestDto requestDto) {
-        requestDto.setUser_id(1);
+    public ResponseEntity<ResultDto<SubmitResponseDto>> submitCode(
+            @RequestBody SubmitRequestDto requestDto, @AuthenticationPrincipal Integer userId) {
+        requestDto.setUser_id(userId);
         SubmitResponseDto result = judgeService.requestSubmit(requestDto);
             return ResponseEntity.ok(ResultDto.of("result", result));
     }

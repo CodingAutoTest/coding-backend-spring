@@ -34,7 +34,7 @@ public class UserSubmissionProblemService {
 
     public String findSubmissionCode(Integer id) {
         UserSubmissionProblem userSubmissionProblem = EntityUtils.getByIdOrThrow(
-                userSubmissionProblemRepository, id, "제출 내역 없음");
+                userSubmissionProblemRepository, id, "제출 내역 코드 없음");
         return userSubmissionProblem.getSubmissionCode();
     }
 

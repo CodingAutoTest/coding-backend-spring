@@ -17,6 +17,7 @@ import java.util.List;
 public interface UserSubmissionProblemMapper {
     @Mapping(source = "language", target = "language", qualifiedByName = "mapLanguageName")
     @Mapping(source = "createdAt", target = "createdAt", qualifiedByName = "formatDate")
+    @Mapping(source = "submissionId", target = "submissionId")
     UserSubmissionHistory toHistoryDto(UserSubmissionProblem usp);
 
 
