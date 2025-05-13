@@ -41,7 +41,8 @@ public class User extends BaseEntity {
     private LocalDateTime lastLogin;
 
     @Column(name = "solved_count")
-    private Integer solvedCount;
+    @Builder.Default
+    private Integer solvedCount = 0;
 
     @Column(name = "rating", nullable = false)
     @Builder.Default

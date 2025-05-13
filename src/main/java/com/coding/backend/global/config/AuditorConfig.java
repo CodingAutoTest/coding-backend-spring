@@ -11,6 +11,6 @@ import java.util.Optional;
 public class AuditorConfig {
         @Bean
         public AuditorAware<Integer> auditorProvider() {
-            return () -> Optional.of(SecurityUtil.getCurrentUserId());
+            return () -> Optional.ofNullable(SecurityUtil.getCurrentUserId());
         }
 }

@@ -23,7 +23,7 @@ public class UserSubmissionProblem extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_submission_problem_id")
-    private Integer submissionId;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ai_feedback_id", nullable = false)

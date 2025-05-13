@@ -24,8 +24,9 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/nameAndImage")
-    public ResponseEntity<ResultDto<UserProblemProfileResponseDto>> getUsernameAndImage() {
-        UserProblemProfileResponseDto result = userService.getUsernameAndProfileImageById(1);
+    public ResponseEntity<ResultDto<UserProblemProfileResponseDto>> getUsernameAndImage(
+            @AuthenticationPrincipal Integer userId) {
+        UserProblemProfileResponseDto result = userService.getUsernameAndProfileImageById(userId);
         return ResponseEntity.ok(ResultDto.of("result", result));
     }
 
