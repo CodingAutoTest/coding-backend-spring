@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class RankingDTO {
+    private Integer userId;
     private Integer rank;
     private String name;
     private String profileImage;

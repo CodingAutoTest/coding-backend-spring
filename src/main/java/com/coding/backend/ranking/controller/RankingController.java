@@ -30,12 +30,9 @@ public class RankingController {
         Map<String, Object> result = rankingService.getRankingWithPageable(sort, order, page, size, name);
         return ResponseEntity.ok(ResultDto.of("result", result));
     }
-
-@GetMapping("/me")
-public ResponseEntity<ResultDto<?>> getMyRanking(@AuthenticationPrincipal Integer userId) {
-    RankingDTO result = rankingService.getMyRanking(userId);
-    return ResponseEntity.ok(ResultDto.of("result", result));
-}
-
-
+    @GetMapping("/me")
+    public ResponseEntity<ResultDto<?>> getMyRanking(@AuthenticationPrincipal Integer userId) {
+        RankingDTO result = rankingService.getMyRanking(userId);
+        return ResponseEntity.ok(ResultDto.of("result", result));
+    }
 }

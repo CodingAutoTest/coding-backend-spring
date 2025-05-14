@@ -6,6 +6,7 @@ import com.coding.backend.subscription.service.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,10 +17,11 @@ public class SubscriptionController {
     private final SubscriptionService subscriptionService;
 
     @PostMapping("/payment")
-    public ResponseEntity<ResultDto<Void>> handlePayment(@RequestBody PaymentRequestDto dto) {
+    public ResponseEntity<ResultDto<Void>> handlePayment(@RequestBody PaymentRequestDto dto,@AuthenticationPrincipal Integer userId) {
+
+        dto.setUserId(userId);
         subscriptionService.saveSubscription(dto);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(ResultDto.of(HttpStatus.OK, "✅ 결제 정보 저장 성공"));
+        return ResponseEntity.ok().build(); // 상태코드 200 OK만 반환
+
     }
 }

@@ -2,8 +2,10 @@ package com.coding.backend.subscription.dto;
 
 // dto/PaymentRequestDto.java
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class PaymentRequestDto {
     private String impUid;
     private String merchantUid;
