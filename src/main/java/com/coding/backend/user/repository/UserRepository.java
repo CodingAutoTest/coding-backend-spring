@@ -18,4 +18,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Page<User> findByNameStartingWithIgnoreCase(String name, Pageable pageable);
     Page<User> findAll(Pageable pageable);
     int countByRatingGreaterThan(Long rating);
+    boolean existsByNameAndIdNot(String name, Integer id);
 }
