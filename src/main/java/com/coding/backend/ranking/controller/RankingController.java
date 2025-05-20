@@ -1,5 +1,6 @@
 package com.coding.backend.ranking.controller;
 
+import com.coding.backend.global.utils.SecurityUtil;
 import com.coding.backend.ranking.dto.RankingDTO;
 import com.coding.backend.ranking.service.RankingService;
 import com.coding.backend.global.dto.ResultDto;
@@ -31,7 +32,13 @@ public class RankingController {
         return ResponseEntity.ok(ResultDto.of("result", result));
     }
     @GetMapping("/me")
-    public ResponseEntity<ResultDto<?>> getMyRanking(@AuthenticationPrincipal Integer userId) {
+    public ResponseEntity<ResultDto<?>> getMyRanking() {
+        Integer userId = SecurityUtil.getCurrentUserId();
+        if (userId == null) {
+            // ⚠ null 넘기면 Map.of에서 NPE 발생하므로, 따로 처리
+            return ResponseEntity.ok(new ResultDto<>());
+        }
+
         RankingDTO result = rankingService.getMyRanking(userId);
         return ResponseEntity.ok(ResultDto.of("result", result));
     }
