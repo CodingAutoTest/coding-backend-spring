@@ -38,6 +38,11 @@ public class UserController {
         return ResponseEntity.ok(ResultDto.of("result", dto));
     }
 
+    @GetMapping("/profile/{name}")
+    public ResponseEntity<ResultDto<UserMyPageDto>> otherProfile(@PathVariable String name) {
+        return ResponseEntity.ok(ResultDto.of("result", userService.getUserMyPageInfoByName(name)));
+    }
+
     /* ─── 통계 ─── */
 
     @GetMapping("/stats/level")
@@ -67,7 +72,7 @@ public class UserController {
     /* ─── 이미지 업로드 ─── */
     @PostMapping("/upload-image")
     public ResponseEntity<ResultDto<UploadImageResponseDto>> uploadImages(
-            @AuthenticationPrincipal Integer userId,             // ✅ principal 로 id 주입
+            @AuthenticationPrincipal Integer userId,
             @RequestPart(value = "profileImage",    required = false) MultipartFile profileImg,
             @RequestPart(value = "backgroundImage", required = false) MultipartFile bgImg) {
 

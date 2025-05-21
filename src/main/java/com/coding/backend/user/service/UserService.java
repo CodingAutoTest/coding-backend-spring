@@ -114,6 +114,13 @@ public class UserService {
                 .build();
     }
 
+    public UserMyPageDto getUserMyPageInfoByName(String name) {
+        Integer id = userRepository.findByName(name)
+                .orElseThrow(() -> new ResourceNotFoundException("USER_NOT_FOUND"))
+                .getId();
+        return getUserMyPageInfo(id);
+    }
+
     @Transactional
     public UploadImageResponseDto uploadImage(Integer userId,
                                               MultipartFile profileImg,
