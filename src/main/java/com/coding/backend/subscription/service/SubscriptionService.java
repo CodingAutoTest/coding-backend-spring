@@ -41,4 +41,7 @@ public class SubscriptionService {
 
         subscriptionRepository.save(subscription);
     }
+    public Subscription getByUserId(Integer userId) {
+        return subscriptionRepository.findByUserId(userId).orElse(null);
+    }
 }

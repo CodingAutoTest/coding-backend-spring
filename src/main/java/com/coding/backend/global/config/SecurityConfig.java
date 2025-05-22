@@ -24,7 +24,7 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/problems","/rankings","/rankings/me").permitAll()
+                        .requestMatchers("/auth/**", "/problems","/rankings","/rankings/me","/premium/**","api/subscription/me").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
