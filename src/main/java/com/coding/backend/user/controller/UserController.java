@@ -38,6 +38,11 @@ public class UserController {
         return ResponseEntity.ok(ResultDto.of("result", dto));
     }
 
+    @GetMapping("/profile/{name}")
+    public ResponseEntity<ResultDto<UserMyPageDto>> otherProfile(@PathVariable String name) {
+        return ResponseEntity.ok(ResultDto.of("result", userService.getUserMyPageInfoByName(name)));
+    }
+
     /* ─── 통계 ─── */
 
     @GetMapping("/stats/level")
@@ -65,10 +70,9 @@ public class UserController {
     }
 
     /* ─── 이미지 업로드 ─── */
-
     @PostMapping("/upload-image")
     public ResponseEntity<ResultDto<UploadImageResponseDto>> uploadImages(
-            @PathVariable Integer userId,
+            @AuthenticationPrincipal Integer userId,
             @RequestPart(value = "profileImage",    required = false) MultipartFile profileImg,
             @RequestPart(value = "backgroundImage", required = false) MultipartFile bgImg) {
 
@@ -79,30 +83,28 @@ public class UserController {
     /* ─── 프로필 수정 ─── */
 
     @PostMapping("/modify")
-    public ResponseEntity<ResultDto<Void>> modifyProfile(
-            @PathVariable Integer userId,
+    public ResponseEntity<ResultDto<String>> modifyProfile(
+            @AuthenticationPrincipal Integer userId,
             @RequestBody UserProfileModifyRequestDto dto) {
 
         userService.modifyProfile(userId, dto);
-        return ResponseEntity.ok(ResultDto.of("result", null));
+        return ResponseEntity.ok(ResultDto.of("result", ""));
     }
 
     /* ─── 비밀번호 변경 ─── */
-
     @PostMapping("/change-password")
-    public ResponseEntity<ResultDto<Void>> changePassword(
-            @PathVariable Integer userId,
+    public ResponseEntity<ResultDto<String>> changePassword(
+            @AuthenticationPrincipal Integer userId,
             @RequestBody UserPasswordChangeRequestDto dto) {
 
         userService.modifyPassword(userId, dto);
-        return ResponseEntity.ok(ResultDto.of("result", null));
+        return ResponseEntity.ok(ResultDto.of("result", ""));
     }
 
     /* ─── 프리미엄 저장 ─── */
-
     @PostMapping("/save")
     public ResponseEntity<ResultDto<Void>> savePremium(
-            @PathVariable Integer userId,
+            @AuthenticationPrincipal Integer userId,
             @RequestBody PremiumRequestDto dto) {
 
         userService.savePremium(userId, dto);
@@ -110,10 +112,11 @@ public class UserController {
     }
 
     /* ─── 계정 삭제 ─── */
-
     @PostMapping("/remove")
-    public ResponseEntity<ResultDto<Void>> removeUser(@PathVariable Integer userId) {
+    public ResponseEntity<ResultDto<String>> removeUser(
+            @AuthenticationPrincipal Integer userId) {
+
         userService.removeUser(userId);
-        return ResponseEntity.ok(ResultDto.of("result", null));
+        return ResponseEntity.ok(ResultDto.of("result", ""));
     }
 }

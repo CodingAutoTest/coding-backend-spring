@@ -15,7 +15,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findUserById(@Param("userId") Integer userId);
 
     Optional<User> findByEmail(String email);
+    Optional<User> findByName(String name);
     Page<User> findByNameStartingWithIgnoreCase(String name, Pageable pageable);
     Page<User> findAll(Pageable pageable);
     int countByRatingGreaterThan(Long rating);
+    boolean existsByNameAndIdNot(String name, Integer id);
 }

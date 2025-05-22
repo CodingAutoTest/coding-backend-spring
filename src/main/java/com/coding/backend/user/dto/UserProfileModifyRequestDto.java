@@ -9,7 +9,6 @@ import lombok.*;
 @Builder
 public class UserProfileModifyRequestDto {
     private String name;
-    private String email;
     private String profileImageUrl;
     private String backgroundImageUrl;
 }
