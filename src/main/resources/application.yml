@@ -18,5 +18,14 @@ spring:
       max-file-size: 10MB       # 파일 하나 최대 크기
       max-request-size: 10MB    # 요청 전체 크기
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: jung050319@gmail.com
+    password: mqpgwhakpjvjjjcf
+    properties:
+      "[mail.smtp.auth]": true
+      "[mail.smtp.starttls.enable]": true
+
 server:
   port: 8080
