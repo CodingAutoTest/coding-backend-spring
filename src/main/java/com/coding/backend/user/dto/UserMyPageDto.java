@@ -16,6 +16,7 @@ public class UserMyPageDto {
     private Integer solvedCount;
     private String profileImage;
     private String backgroundImage;
+    private boolean premiumStatus;
     private Map<Integer, Integer> tierCount; // 티어 별 문제 푼 개수
     private Map<String, Integer> tagCount;   // 태그 별 문제 푼 개수
     private Map<LocalDate, Integer> solvedCountByDate; // 날짜 별 문제 푼 개수

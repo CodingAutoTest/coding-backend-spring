@@ -45,7 +45,7 @@ public class UserService {
 
 
     public UserProblemProfileResponseDto getUsernameAndProfileImageById(Integer id) {
-        User user = EntityUtils.getByIdOrThrow(userRepository, id, "유저가 없습니다.");
+        User user = EntityUtils.getByIdOrThrow(userRepository, id, "USER_NOT_FOUND");
 
         UserProblemProfileResponseDto dto = new UserProblemProfileResponseDto();
         dto.setName(user.getName());
@@ -72,7 +72,7 @@ public class UserService {
 
     private UserMyPageDto extractStats(Integer userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 유저를 찾을 수 없습니다."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "USER_NOT_FOUND"));
 
         List<UserSubmissionProblem> submissions = userSubmissionProblemRepository.findByUserIdAndStatusTrue(userId);
 
@@ -108,6 +108,7 @@ public class UserService {
                 .solvedCount(uniqueProblemIds.size())
                 .profileImage(user.getProfileImage())
                 .backgroundImage(user.getBackgroundImage())
+                .premiumStatus(user.getPremiumStatus())
                 .tierCount(tierCount)
                 .tagCount(tagCount)
                 .solvedCountByDate(solvedCountByDate)

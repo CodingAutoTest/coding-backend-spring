@@ -103,12 +103,12 @@ public class UserController {
 
     /* ─── 프리미엄 저장 ─── */
     @PostMapping("/save")
-    public ResponseEntity<ResultDto<Void>> savePremium(
+    public ResponseEntity<ResultDto<String>> savePremium(
             @AuthenticationPrincipal Integer userId,
             @RequestBody PremiumRequestDto dto) {
 
         userService.savePremium(userId, dto);
-        return ResponseEntity.ok(ResultDto.of("result", null));
+        return ResponseEntity.ok(ResultDto.of("result", ""));
     }
 
     /* ─── 계정 삭제 ─── */
