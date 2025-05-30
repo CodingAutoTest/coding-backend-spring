@@ -59,6 +59,9 @@ public class UserSubmissionProblem extends BaseEntity {
     @Column(name = "total_count")
     private Integer totalCount;
 
-    @Column(name = "error", columnDefinition = "TEXT")
-    private String error;
+    @Column(name = "judge0_status", columnDefinition = "TEXT")
+    private String judge0Status;
+
+    @Column(name = "judge0_stderr", columnDefinition = "TEXT")
+    private String judge0Stderr;
 }
