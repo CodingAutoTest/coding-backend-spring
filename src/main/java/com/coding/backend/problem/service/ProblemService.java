@@ -47,10 +47,17 @@ public class ProblemService {
             Integer userId
     ) {
         Pageable pageable = PageRequest.of(page, size);
+        Page<Problem> problems;
 
-        Page<Problem> problems = problemRepository.findFilteredProblems(
-                status, tier, search, tagId, userId, pageable
-        );
+        if (userId != null) {
+            problems = problemRepository.findFilteredProblemsWithUser(
+                    status, tier, search, tagId, userId, pageable
+            );
+        } else {
+            problems = problemRepository.findFilteredProblemsWithoutUser(
+                    tier, search, tagId, pageable
+            );
+        }
 
         Page<ProblemResponseDto> problemResponseDto = problems.map(problem -> convertToDto(problem, userId));
 
@@ -60,6 +67,7 @@ public class ProblemService {
                 .totalElements(problemResponseDto.getTotalElements())
                 .build();
     }
+
 
     private ProblemResponseDto convertToDto(Problem problem, Integer userId) {
         // 제출 확인
